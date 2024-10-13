@@ -11,10 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringBootTest
 @Transactional
 public class UpdateTaskUseCaseIntegrationTest {
-
     @Autowired
     private TaskRepository taskRepository;
-
     @Autowired
     private UpdateTaskUseCase updateTaskUseCase;
 
@@ -25,12 +23,9 @@ public class UpdateTaskUseCaseIntegrationTest {
         taskRepository.insert(task);
 
         // when
-        UpdateTaskCommand updateTaskCommand = new UpdateTaskCommand(
-            task.id(),
-            "new title",
-            "new description"
+        updateTaskUseCase.execute(
+            new UpdateTaskCommand(task.id(), "new title", "new description")
         );
-        updateTaskUseCase.execute(updateTaskCommand);
 
         // then
         Task updatedTask = taskRepository.findById(task.id()).get();
