@@ -23,17 +23,30 @@ public class TaskJdbcRepository implements TaskRepository {
     @Override
     public void insert(Task task) {
         dsl.insertInto(TASKS)
-           .set(TASKS.ID, task.id())
-           .set(TASKS.TITLE, task.title())
-           // 他のフィールドも設定
-           .execute();
+            .set(TASKS.ID, task.id())
+            .set(TASKS.TITLE, task.title())
+            .set(TASKS.DESCRIPTION, task.description())
+            .execute();
+    }
+
+    @Override
+    public void update(Task task) {
+        dsl.update(TASKS)
+            .set(TASKS.TITLE, task.title())
+            .set(TASKS.DESCRIPTION, task.description())
+            .where(TASKS.ID.eq(task.id()))
+            .execute();
     }
 
     @Override
     public Optional<Task> findById(Integer id) {
-        Task task = dsl.selectFrom(TASKS)
-                       .where(TASKS.ID.eq(id))
-                       .fetchOneInto(Task.class);
-        return Optional.ofNullable(task);
+        return dsl.selectFrom(TASKS)
+            .where(TASKS.ID.eq(id))
+            .fetchOptional()
+            .map(record -> new Task(
+                record.get(TASKS.ID),
+                record.get(TASKS.TITLE),
+                record.get(TASKS.DESCRIPTION)
+            ));
     }
 }

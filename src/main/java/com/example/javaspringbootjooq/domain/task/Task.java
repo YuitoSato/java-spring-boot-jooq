@@ -15,6 +15,12 @@ public class Task {
         this.description = description;
     }
 
+    public Task(Integer id, String title, String description) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+    }
+
     public Integer id() {
         return id;
     }
@@ -38,5 +44,9 @@ public class Task {
     @Override
     public int hashCode() {
         return Objects.hash(id, title, description);
+    }
+
+    public Task update(String title, String description) {
+        return new Task(this.id, title, description);
     }
 }

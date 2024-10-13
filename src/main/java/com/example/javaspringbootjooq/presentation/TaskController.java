@@ -1,12 +1,11 @@
 package com.example.javaspringbootjooq.presentation;
 
-import com.example.javaspringbootjooq.application.CreateTaskCommand;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.javaspringbootjooq.application.task.CreateTaskCommand;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.javaspringbootjooq.application.CreateTaskUseCase;
+import com.example.javaspringbootjooq.application.task.CreateTaskUseCase;
 
 @RestController
 @RequestMapping("/tasks")

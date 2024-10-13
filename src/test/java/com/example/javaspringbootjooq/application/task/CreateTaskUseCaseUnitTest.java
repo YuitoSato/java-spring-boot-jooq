@@ -1,4 +1,4 @@
-package com.example.javaspringbootjooq.application;
+package com.example.javaspringbootjooq.application.task;
 
 import com.example.javaspringbootjooq.domain.RandomIdGenerator;
 import com.example.javaspringbootjooq.domain.task.Task;
@@ -11,21 +11,21 @@ import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-class CreateTaskUseCaseTest {
+class CreateTaskUseCaseUnitTest {
 
     @Test
     void testExecute() {
         // RandomNumberGeneratorのstaticメソッドをモック
         MockedStatic<RandomIdGenerator> randomIdGeneratorMockedStatic = mockStatic(RandomIdGenerator.class);
+        when(RandomIdGenerator.generate()).thenReturn(1);
 
-        // generateRandomNumberが100を返すように設定
-        when(RandomIdGenerator.generate()).thenReturn(100);
+        TaskRepository taskRepository = mock(TaskRepository.class);
+
 
         // タスクを作成
         Task task = new Task("title", "description");
 
         // TaskRepositoryのモックを作成
-        TaskRepository taskRepository = mock(TaskRepository.class);
 
         // テスト対象のクラスを作成
         CreateTaskUseCase createTaskUseCase = new CreateTaskUseCase(taskRepository);
