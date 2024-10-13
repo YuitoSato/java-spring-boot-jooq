@@ -1,16 +1,12 @@
 package com.example.javaspringbootjooq.application;
 
-import org.springframework.stereotype.Service;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import com.example.javaspringbootjooq.domain.task.Task;
 import com.example.javaspringbootjooq.domain.task.TaskRepository;
+import org.springframework.stereotype.Service;
 
 @Service
 public class CreateTaskUseCase {
 
-    @Autowired
     private final TaskRepository taskRepository;
 
     public CreateTaskUseCase(TaskRepository taskRepository) {
