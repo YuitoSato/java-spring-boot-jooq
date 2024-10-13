@@ -1,10 +1,8 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
   id("java")
   id("org.jetbrains.kotlin.jvm") version "1.8.0" // 適切なバージョンを指定
-  id("org.springframework.boot") version "3.1.0"
-  id("io.spring.dependency-management") version "1.1.0"
+  id("org.springframework.boot") version "3.3.4"
+  id("io.spring.dependency-management") version "1.1.6"
   id("nu.studer.jooq") version "8.2"
 }
 

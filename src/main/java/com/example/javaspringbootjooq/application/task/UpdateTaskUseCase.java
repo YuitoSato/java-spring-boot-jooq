@@ -17,7 +17,6 @@ public class UpdateTaskUseCase {
         this.taskRepository = taskRepository;
     }
 
-    @Transactional
     public void execute(UpdateTaskCommand command) {
         Optional<Task> taskOpt = taskRepository.findById(command.id());
 
