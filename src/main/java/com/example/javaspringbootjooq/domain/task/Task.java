@@ -10,12 +10,16 @@ public class Task {
     private final String description;
 
     public Task(String title, String description) {
+        if (title.isEmpty()) throw new IllegalArgumentException("タイトルは1文字で以上ある必要があります");
+        if (description.isEmpty()) throw new IllegalArgumentException("詳細は1文字以上である必要があります");
         this.id = RandomIdGenerator.generate();
         this.title = title;
         this.description = description;
     }
 
     public Task(Integer id, String title, String description) {
+        if (title.isEmpty()) throw new IllegalArgumentException("タイトルは1文字で以上ある必要があります");
+        if (description.isEmpty()) throw new IllegalArgumentException("詳細は1文字以上である必要があります");
         this.id = id;
         this.title = title;
         this.description = description;
@@ -33,6 +37,10 @@ public class Task {
         return description;
     }
 
+    public Task update(String title, String description) {
+        return new Task(this.id, title, description);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -44,9 +52,5 @@ public class Task {
     @Override
     public int hashCode() {
         return Objects.hash(id, title, description);
-    }
-
-    public Task update(String title, String description) {
-        return new Task(this.id, title, description);
     }
 }
