@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import static com.example.javaspringbootjooq.jooq.tables.Tasks.TASKS;
 
@@ -32,7 +33,7 @@ public class UpdateTaskUseCaseCSVIntegrationTest {
 
         // when
         updateTaskUseCase.execute(
-            new UpdateTaskCommand(1, "new title", "new description")
+            new UpdateTaskCommand(1, "new title", "new description", List.of("image"))
         );
 
         // then

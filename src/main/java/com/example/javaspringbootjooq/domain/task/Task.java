@@ -2,27 +2,31 @@ package com.example.javaspringbootjooq.domain.task;
 
 import com.example.javaspringbootjooq.domain.RandomIdGenerator;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Task {
     private final Integer id;
     private final String title;
     private final String description;
+    private final List<String> imageUrls;
 
-    public Task(String title, String description) {
+    public Task(String title, String description, List<String> imageUrls) {
         if (title.isEmpty()) throw new IllegalArgumentException("タイトルは1文字で以上ある必要があります");
         if (description.isEmpty()) throw new IllegalArgumentException("詳細は1文字以上である必要があります");
         this.id = RandomIdGenerator.generate();
         this.title = title;
         this.description = description;
+        this.imageUrls = imageUrls;
     }
 
-    public Task(Integer id, String title, String description) {
+    public Task(Integer id, String title, String description, List<String> imageUrls) {
         if (title.isEmpty()) throw new IllegalArgumentException("タイトルは1文字で以上ある必要があります");
         if (description.isEmpty()) throw new IllegalArgumentException("詳細は1文字以上である必要があります");
         this.id = id;
         this.title = title;
         this.description = description;
+        this.imageUrls = imageUrls;
     }
 
     public Integer id() {
@@ -37,8 +41,12 @@ public class Task {
         return description;
     }
 
-    public Task update(String title, String description) {
-        return new Task(this.id, title, description);
+    public List<String> imageUrls() {
+        return imageUrls;
+    }
+
+    public Task update(String title, String description, List<String> imageUrls) {
+        return new Task(this.id, title, description, imageUrls);
     }
 
     @Override

@@ -26,7 +26,7 @@ public class UpdateTaskUseCase {
 
         Task task = taskOpt.get();
 
-        Task updated = task.update(command.title(), command.description());
+        Task updated = task.update(command.title(), command.description(), command.imageUrls());
 
         taskRepository.update(updated);
     }
