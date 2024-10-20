@@ -1,8 +1,9 @@
 package com.example.javaspringbootjooq.application.task;
 
+import com.example.javaspringbootjooq.domain.TestSeedData;
 import com.example.javaspringbootjooq.domain.task.Task;
 import com.example.javaspringbootjooq.domain.task.TaskRepository;
-import com.example.javaspringbootjooq.domain.user.User;
+import com.example.javaspringbootjooq.domain.task.TaskTestBuilder;
 import com.example.javaspringbootjooq.domain.user.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -25,9 +26,8 @@ public class UpdateTaskUseCaseIntegrationTest {
     @Test
     void タスクを更新できること() {
         // given
-        User user = new User(1, "name", "email@example.com");
-        userRepository.insert(user);
-        Task task = new Task(user.id(), "title", "description", List.of("image1", "image2"));
+        Integer user1Id = TestSeedData.user1Id;
+        Task task = new TaskTestBuilder().userId(user1Id).build();
         taskRepository.insert(task);
 
         // when
