@@ -19,8 +19,9 @@ public class UpdateTaskUseCaseIntegrationTest {
     private UpdateTaskUseCase updateTaskUseCase;
 
     @Test
-    void testUpdateTask() {
+    void タスクを更新できること() {
         // given
+
         Task task = new Task("title", "description", List.of("image1", "image2"));
         taskRepository.insert(task);
 
