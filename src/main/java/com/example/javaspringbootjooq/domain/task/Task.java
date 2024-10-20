@@ -7,23 +7,26 @@ import java.util.Objects;
 
 public class Task {
     private final Integer id;
+    private final Integer userId;
     private final String title;
     private final String description;
     private final List<String> imageUrls;
 
-    public Task(String title, String description, List<String> imageUrls) {
+    public Task(Integer userId, String title, String description, List<String> imageUrls) {
         if (title.isEmpty()) throw new IllegalArgumentException("タイトルは1文字で以上ある必要があります");
         if (description.isEmpty()) throw new IllegalArgumentException("詳細は1文字以上である必要があります");
         this.id = RandomIdGenerator.generate();
+        this.userId = userId;
         this.title = title;
         this.description = description;
         this.imageUrls = imageUrls;
     }
 
-    public Task(Integer id, String title, String description, List<String> imageUrls) {
+    public Task(Integer id, Integer userId, String title, String description, List<String> imageUrls) {
         if (title.isEmpty()) throw new IllegalArgumentException("タイトルは1文字で以上ある必要があります");
         if (description.isEmpty()) throw new IllegalArgumentException("詳細は1文字以上である必要があります");
         this.id = id;
+        this.userId = userId;
         this.title = title;
         this.description = description;
         this.imageUrls = imageUrls;
@@ -45,8 +48,12 @@ public class Task {
         return imageUrls;
     }
 
+    public Integer userId() {
+        return userId;
+    }
+
     public Task update(String title, String description, List<String> imageUrls) {
-        return new Task(this.id, title, description, imageUrls);
+        return new Task(this.id, this.userId, title, description, imageUrls);
     }
 
     @Override

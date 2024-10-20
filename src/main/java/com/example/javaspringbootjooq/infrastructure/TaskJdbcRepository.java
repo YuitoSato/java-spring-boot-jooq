@@ -17,11 +17,11 @@ import static com.example.javaspringbootjooq.jooq.Tables.TASKS;
 @Component
 public class TaskJdbcRepository implements TaskRepository {
 
-    private final DSLContext dsl;
+    private final DSLContext jooq;
 
     @Autowired
     public TaskJdbcRepository(DSLContext dsl) {
-        this.dsl = dsl;
+        this.jooq = dsl;
     }
 
     private static Task recordToTask(TasksRecord taskRecord, List<ImagesRecord> imageRecords) {
@@ -36,6 +36,7 @@ public class TaskJdbcRepository implements TaskRepository {
 
         return new Task(
             taskRecord.getId(),
+            taskRecord.getUserId(),
             taskRecord.getTitle(),
             taskRecord.getDescription(),
             imageUrls
@@ -44,14 +45,15 @@ public class TaskJdbcRepository implements TaskRepository {
 
     @Override
     public void insert(Task task) {
-        dsl.insertInto(TASKS)
+        jooq.insertInto(TASKS)
             .set(TASKS.ID, task.id())
+            .set(TASKS.USER_ID, task.userId())
             .set(TASKS.TITLE, task.title())
             .set(TASKS.DESCRIPTION, task.description())
             .execute();
 
         task.imageUrls().forEach(imageUrl -> {
-            dsl.insertInto(IMAGES)
+            jooq.insertInto(IMAGES)
                 .set(IMAGES.TASK_ID, task.id())
                 .set(IMAGES.IMAGE_URL, imageUrl)
                 .execute();
@@ -60,18 +62,18 @@ public class TaskJdbcRepository implements TaskRepository {
 
     @Override
     public void update(Task task) {
-        dsl.update(TASKS)
+        jooq.update(TASKS)
             .set(TASKS.TITLE, task.title())
             .set(TASKS.DESCRIPTION, task.description())
             .where(TASKS.ID.eq(task.id()))
             .execute();
 
-        dsl.deleteFrom(IMAGES)
+        jooq.deleteFrom(IMAGES)
             .where(IMAGES.TASK_ID.eq(task.id()))
             .execute();
 
         task.imageUrls().forEach(imageUrl -> {
-            dsl.insertInto(IMAGES)
+            jooq.insertInto(IMAGES)
                 .set(IMAGES.TASK_ID, task.id())
                 .set(IMAGES.IMAGE_URL, imageUrl)
                 .execute();
@@ -80,11 +82,11 @@ public class TaskJdbcRepository implements TaskRepository {
 
     @Override
     public Optional<Task> findById(Integer id) {
-        Optional<TasksRecord> tasksRecord = dsl.selectFrom(TASKS)
+        Optional<TasksRecord> tasksRecord = jooq.selectFrom(TASKS)
             .where(TASKS.ID.eq(id))
             .fetchOptional();
 
-        List<ImagesRecord> imageRecords = dsl.selectFrom(IMAGES)
+        List<ImagesRecord> imageRecords = jooq.selectFrom(IMAGES)
             .where(IMAGES.TASK_ID.eq(id))
             .fetch();
 
