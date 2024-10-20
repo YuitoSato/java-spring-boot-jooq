@@ -69,6 +69,10 @@ jooq {
   }
 }
 
+tasks.named<JavaCompile>("compileJava") {
+  dependsOn("generateJooq")
+}
+
 sourceSets {
   main {
     java {
