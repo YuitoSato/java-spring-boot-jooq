@@ -16,7 +16,7 @@ public class CreateTaskUseCase {
     }
 
     public void execute(CreateTaskCommand command) {
-        Task task = new Task(command.title(), command.description(), command.imageUrls());
+        Task task = new Task(command.userId(), command.title(), command.description(), command.imageUrls());
 
         taskRepository.insert(task);
     }

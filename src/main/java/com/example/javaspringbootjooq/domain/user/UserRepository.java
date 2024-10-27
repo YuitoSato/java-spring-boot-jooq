@@ -1,8 +1,10 @@
 package com.example.javaspringbootjooq.domain.user;
 
+import java.util.Optional;
+
 public interface UserRepository {
 
     void insert(User user);
 
-    User findById(Integer id);
+    Optional<User> findById(Integer id);
 }

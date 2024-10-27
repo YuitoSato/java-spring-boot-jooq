@@ -1,7 +1,10 @@
 package com.example.javaspringbootjooq.application.task;
 
+import com.example.javaspringbootjooq.domain.TestSeedData;
 import com.example.javaspringbootjooq.domain.task.Task;
 import com.example.javaspringbootjooq.domain.task.TaskRepository;
+import com.example.javaspringbootjooq.domain.task.TaskTestBuilder;
+import com.example.javaspringbootjooq.domain.user.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +19,15 @@ public class UpdateTaskUseCaseIntegrationTest {
     @Autowired
     private TaskRepository taskRepository;
     @Autowired
+    private UserRepository userRepository;
+    @Autowired
     private UpdateTaskUseCase updateTaskUseCase;
 
     @Test
-    void testUpdateTask() {
+    void タスクを更新できること() {
         // given
-        Task task = new Task("title", "description", List.of("image1", "image2"));
+        Integer user1Id = TestSeedData.user1Id;
+        Task task = new TaskTestBuilder().userId(user1Id).build();
         taskRepository.insert(task);
 
         // when
